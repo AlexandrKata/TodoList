@@ -4,21 +4,8 @@ import { formatDistanceToNow } from "date-fns";
 const date = formatDistanceToNow(new Date());
 
 export default class Task extends Component {
-  state = {
-    completed: false,
-  };
-
-  onLabelClick = () => {
-    this.setState(({ completed }) => {
-      return {
-        completed: !completed,
-      };
-    });
-  };
-
   render() {
-    const { label, onDeleted } = this.props;
-    const { completed } = this.state;
+    const { label, onDeleted, onToggleDone, completed, id } = this.props;
 
     let classNames = null;
     if (completed) {
@@ -28,9 +15,14 @@ export default class Task extends Component {
     return (
       <li className={classNames}>
         <div className="view">
-          <input className="toggle" type="checkbox" />
-          <label>
-            <span className="description" onClick={this.onLabelClick}>
+          <input
+            className="toggle"
+            type="checkbox"
+            checked={completed}
+            onChange={onToggleDone}
+          />
+          <label htmlFor={id}>
+            <span className="description" onClick={onToggleDone}>
               {label}
             </span>
             <span className="created">{date}</span>
