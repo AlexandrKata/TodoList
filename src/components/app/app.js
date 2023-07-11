@@ -4,25 +4,38 @@ import "../../index.css";
 import TaskList from "../task-list";
 import NewTaskForm from "../new-task-form";
 import Footer from "../footer";
+import "./app.css";
 
 export default class App extends Component {
   maxId = 10;
   state = {
-    todoData: [
-      this.createTodoItem("Web Learning"),
-      this.createTodoItem("JS Learning"),
-      this.createTodoItem("React Learning"),
-    ],
+    todoData: [this.createTodoItem("xxxxxxxxxxx")],
     filter: "all",
   };
 
   createTodoItem(label) {
     return {
       label,
+      time: new Date(),
       completed: false,
+      editing: false,
       id: this.maxId++,
     };
   }
+
+  editItem = (id, text) => {
+    this.setState(({ todoData }) => {
+      const newArr = todoData.map((el, i) => {
+        if (el.id === id) {
+          el.label = text;
+        }
+        return el;
+      });
+      return {
+        todoData: newArr,
+      };
+    });
+  };
 
   deleteItem = (id) => {
     this.setState(({ todoData }) => {
@@ -58,6 +71,14 @@ export default class App extends Component {
     this.setState(({ todoData }) => {
       return {
         todoData: this.toggleProperty(todoData, id, "completed"),
+      };
+    });
+  };
+
+  onToggleEditing = (id) => {
+    this.setState(({ todoData }) => {
+      return {
+        todoData: this.toggleProperty(todoData, id, "editing"),
       };
     });
   };
@@ -99,7 +120,9 @@ export default class App extends Component {
         <section className="main">
           <TaskList
             todos={visibleItems}
+            onEdited={this.editItem}
             onDeleted={this.deleteItem}
+            onToggleEditing={this.onToggleEditing}
             onToggleDone={this.onToggleDone}
           />
           <Footer
