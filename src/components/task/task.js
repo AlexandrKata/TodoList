@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { formatDistanceToNow } from "date-fns";
-import Proptypes from "prop-types";
-import "./task.css";
+import React, { Component } from 'react';
+import { formatDistanceToNow } from 'date-fns';
+import Proptypes from 'prop-types';
+import './task.css';
 
 export default class Task extends Component {
   state = {
@@ -39,14 +39,7 @@ export default class Task extends Component {
   };
 
   render() {
-    const {
-      onDeleted,
-      onToggleDone,
-      onToggleEditing,
-      completed,
-      editing,
-      time,
-    } = this.props;
+    const { onDeleted, onToggleDone, onToggleEditing, completed, editing, time } = this.props;
     let { label } = this.state;
     const date = formatDistanceToNow(
       time,
@@ -56,24 +49,19 @@ export default class Task extends Component {
       new Date()
     );
 
-    let taskClassNames = "";
+    let taskClassNames = '';
     if (completed) {
-      taskClassNames = "completed";
+      taskClassNames = 'completed';
     }
 
     if (editing) {
-      taskClassNames = "editing";
+      taskClassNames = 'editing';
     }
 
     return (
       <li className={taskClassNames}>
         <div className="view">
-          <input
-            className="toggle"
-            type="checkbox"
-            checked={completed}
-            onChange={onToggleDone}
-          />
+          <input className="toggle" type="checkbox" checked={completed} onChange={onToggleDone} />
           <label>
             <span className="description" onClick={onToggleDone}>
               {label}
@@ -84,12 +72,7 @@ export default class Task extends Component {
           <button className="icon icon-destroy" onClick={onDeleted}></button>
         </div>
         <form onSubmit={this.onEditSubmit}>
-          <input
-            type="text"
-            className="edit"
-            value={label}
-            onChange={this.onEditChange}
-          ></input>
+          <input type="text" className="edit" value={label} onChange={this.onEditChange}></input>
         </form>
       </li>
     );

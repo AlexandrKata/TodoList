@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import Proptypes from "prop-types";
-import "./tasks-filter.css";
+import React, { Component } from 'react';
+import Proptypes from 'prop-types';
+import './tasks-filter.css';
 
 export default class TasksFilter extends Component {
   static defaultProps = {
-    filter: "",
+    filter: '',
     onFilterChange: () => {},
   };
   static propTypes = {
@@ -13,9 +13,9 @@ export default class TasksFilter extends Component {
   };
 
   buttons = [
-    { name: "all", label: "All" },
-    { name: "active", label: "Active" },
-    { name: "completed", label: "Completed" },
+    { name: 'all', label: 'All' },
+    { name: 'active', label: 'Active' },
+    { name: 'completed', label: 'Completed' },
   ];
 
   render() {
@@ -23,14 +23,10 @@ export default class TasksFilter extends Component {
 
     const buttons = this.buttons.map(({ name, label }) => {
       const isActive = filter === name;
-      const classNames = isActive ? "selected" : "";
+      const classNames = isActive ? 'selected' : '';
       return (
         <li key={name}>
-          <button
-            type="button"
-            className={classNames}
-            onClick={() => onFilterChange(name)}
-          >
+          <button type="button" className={classNames} onClick={() => onFilterChange(name)}>
             {label}
           </button>
         </li>

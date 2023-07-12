@@ -1,16 +1,16 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import "../../index.css";
-import TaskList from "../task-list";
-import NewTaskForm from "../new-task-form";
-import Footer from "../footer";
-import "./app.css";
+import '../../index.css';
+import TaskList from '../task-list';
+import NewTaskForm from '../new-task-form';
+import Footer from '../footer';
+import './app.css';
 
 export default class App extends Component {
   maxId = 10;
   state = {
-    todoData: [this.createTodoItem("xxxxxxxxxxx")],
-    filter: "all",
+    todoData: [],
+    filter: 'all',
   };
 
   createTodoItem(label) {
@@ -25,7 +25,7 @@ export default class App extends Component {
 
   editItem = (id, text) => {
     this.setState(({ todoData }) => {
-      const newArr = todoData.map((el, i) => {
+      const newArr = todoData.map((el) => {
         if (el.id === id) {
           el.label = text;
         }
@@ -70,7 +70,7 @@ export default class App extends Component {
   onToggleDone = (id) => {
     this.setState(({ todoData }) => {
       return {
-        todoData: this.toggleProperty(todoData, id, "completed"),
+        todoData: this.toggleProperty(todoData, id, 'completed'),
       };
     });
   };
@@ -78,7 +78,7 @@ export default class App extends Component {
   onToggleEditing = (id) => {
     this.setState(({ todoData }) => {
       return {
-        todoData: this.toggleProperty(todoData, id, "editing"),
+        todoData: this.toggleProperty(todoData, id, 'editing'),
       };
     });
   };
@@ -89,11 +89,11 @@ export default class App extends Component {
 
   filter(items, filter) {
     switch (filter) {
-      case "all":
+      case 'all':
         return items;
-      case "active":
+      case 'active':
         return items.filter((item) => !item.completed);
-      case "completed":
+      case 'completed':
         return items.filter((item) => item.completed);
       default:
         return items;
@@ -109,9 +109,7 @@ export default class App extends Component {
   };
 
   render() {
-    const countCompleted = this.state.todoData.filter(
-      (item) => !item.completed
-    ).length;
+    const countCompleted = this.state.todoData.filter((item) => !item.completed).length;
     const { todoData, filter } = this.state;
     const visibleItems = this.filter(todoData, filter);
     return (

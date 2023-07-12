@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import "./new-task-form.css";
+import React, { Component } from 'react';
+import './new-task-form.css';
 
 export default class NewTaskForm extends Component {
   state = {
-    label: "",
+    label: '',
   };
 
   onLabelChange = (e) => {
@@ -15,7 +15,7 @@ export default class NewTaskForm extends Component {
   onSubmit = (e) => {
     e.preventDefault();
     this.props.onItemAdded(this.state.label);
-    this.setState({ label: "" });
+    this.setState({ label: '' });
   };
 
   render() {
