@@ -22,7 +22,7 @@ export default class TaskList extends Component {
   };
 
   render() {
-    const { todos, onDeleted, onToggleDone, onToggleEditing, onEdited } = this.props;
+    const { todos, onDeleted, onToggleDone, onToggleEditing, onToggleTimer, onEdited } = this.props;
     const elements = todos.map((item) => {
       const { id, ...itemProps } = item;
       return (
@@ -33,6 +33,7 @@ export default class TaskList extends Component {
           onDeleted={() => onDeleted(id)}
           onToggleDone={() => onToggleDone(id)}
           onToggleEditing={() => onToggleEditing(id)}
+          onToggleTimer={(e) => onToggleTimer(id, e)}
         />
       );
     });

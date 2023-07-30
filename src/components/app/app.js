@@ -13,12 +13,14 @@ export default class App extends Component {
     filter: 'all',
   };
 
-  createTodoItem(label) {
+  createTodoItem(label, minutes = 0, seconds = 0) {
     return {
       label,
-      time: new Date(),
+      date: new Date(),
       completed: false,
       editing: false,
+      timer: false,
+      time: (Number(minutes) * 60 + Number(seconds)).toString(),
       id: this.maxId++,
     };
   }
@@ -47,8 +49,8 @@ export default class App extends Component {
     });
   };
 
-  addItem = (text) => {
-    const newItem = this.createTodoItem(text);
+  addItem = (text, minutes, seconds) => {
+    const newItem = this.createTodoItem(text, minutes, seconds);
     this.setState(({ todoData }) => {
       const newArr = [...todoData, newItem];
       return {
@@ -81,6 +83,17 @@ export default class App extends Component {
         todoData: this.toggleProperty(todoData, id, 'editing'),
       };
     });
+  };
+
+  onToggleTimer = (id, e) => {
+    console.log(e.target);
+    if (e.nativeEvent.pointerId == 1) {
+      this.setState(({ todoData }) => {
+        return {
+          todoData: this.toggleProperty(todoData, id, 'timer'),
+        };
+      });
+    }
   };
 
   onFilterChange = (filter) => {
@@ -122,6 +135,7 @@ export default class App extends Component {
             onDeleted={this.deleteItem}
             onToggleEditing={this.onToggleEditing}
             onToggleDone={this.onToggleDone}
+            onToggleTimer={this.onToggleTimer}
           />
           <Footer
             filter={filter}
