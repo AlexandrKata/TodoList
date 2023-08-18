@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Proptypes from 'prop-types';
 import './tasks-filter.css';
 
-export default class TasksFilter extends Component {
+export class TasksFilter extends Component {
   static defaultProps = {
     filter: '',
     onFilterChange: () => {},

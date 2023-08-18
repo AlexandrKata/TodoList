@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
 import '../../index.css';
-import TaskList from '../task-list';
-import NewTaskForm from '../new-task-form';
-import Footer from '../footer';
+import { TaskList } from '../task-list';
+import { NewTaskForm } from '../new-task-form';
+import { Footer } from '../footer';
 import './app.css';
 
-export default class App extends Component {
-  maxId = 10;
+export class App extends Component {
+  maxId = 1;
   state = {
     todoData: [],
     filter: 'all',
@@ -26,6 +26,7 @@ export default class App extends Component {
   }
 
   editItem = (id, text) => {
+    console.log(id, text);
     this.setState(({ todoData }) => {
       const newArr = todoData.map((el) => {
         if (el.id === id) {

@@ -3,11 +3,10 @@ import { formatDistanceToNow } from 'date-fns';
 import Proptypes from 'prop-types';
 import './task.css';
 
-export default class Task extends Component {
+export class Task extends Component {
   state = {
     label: this.props.label,
     timeInSecond: this.props.time,
-    target: '',
   };
 
   static defaultProps = {
@@ -69,6 +68,18 @@ export default class Task extends Component {
     return 'end';
   };
 
+  onBlur = () => {
+    this.setState({ label: this.props.label });
+    this.props.onToggleEditing();
+  };
+
+  onKeyDown = (e) => {
+    if (e.key === 'Escape') {
+      this.setState({ label: this.props.label });
+      this.props.onToggleEditing();
+    }
+  };
+
   render() {
     const { onDeleted, onToggleDone, onToggleEditing, onToggleTimer, completed, editing, date, id } = this.props;
     let { label } = this.state;
@@ -81,18 +92,10 @@ export default class Task extends Component {
       new Date()
     );
 
-    let taskClassNames = '';
-
-    if (completed) {
-      taskClassNames = 'completed';
-    }
-
-    if (editing) {
-      taskClassNames = 'editing';
-    }
+    let taskClassNames = [completed ? 'completed' : '', editing ? 'editing' : ''];
 
     return (
-      <li className={taskClassNames}>
+      <li className={taskClassNames.join(' ')}>
         <div className="view">
           <input className="toggle" type="checkbox" checked={completed} onChange={onToggleDone} />
           <label htmlFor={id}>
@@ -107,9 +110,21 @@ export default class Task extends Component {
           <button className="icon icon-edit" onClick={onToggleEditing}></button>
           <button className="icon icon-destroy" onClick={onDeleted}></button>
         </div>
-        <form onSubmit={this.onEditSubmit}>
-          <input type="text" className="edit" value={label} onChange={this.onEditChange}></input>
-        </form>
+        {editing ? (
+          <form onSubmit={this.onEditSubmit}>
+            <input
+              type="text"
+              className="edit"
+              value={label}
+              onChange={this.onEditChange}
+              autoFocus
+              onBlur={this.onBlur}
+              onKeyDown={this.onKeyDown}
+            ></input>
+          </form>
+        ) : (
+          ''
+        )}
       </li>
     );
   }

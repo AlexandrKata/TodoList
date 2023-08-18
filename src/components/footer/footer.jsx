@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import Proptypes from 'prop-types';
 
-import TasksFilter from '../tasks-filter';
+import { TasksFilter } from '../tasks-filter';
 import './footer.css';
 
-export default class Footer extends Component {
+export class Footer extends Component {
   static defaultProps = {
     filter: '',
     onFilterChange: () => {},

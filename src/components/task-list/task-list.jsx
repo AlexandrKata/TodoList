@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import Proptypes from 'prop-types';
 import './task-list.css';
 
-import Task from '../task';
+import { Task } from '../task';
 
-export default class TaskList extends Component {
+export class TaskList extends Component {
   static defaultProps = {
     todos: [],
     onDeleted: () => {},
@@ -24,16 +24,16 @@ export default class TaskList extends Component {
   render() {
     const { todos, onDeleted, onToggleDone, onToggleEditing, onToggleTimer, onEdited } = this.props;
     const elements = todos.map((item) => {
-      const { id, ...itemProps } = item;
+      const { ...itemProps } = item;
       return (
         <Task
-          key={id}
+          key={item.id}
           {...itemProps}
           onEdited={onEdited}
-          onDeleted={() => onDeleted(id)}
-          onToggleDone={() => onToggleDone(id)}
-          onToggleEditing={() => onToggleEditing(id)}
-          onToggleTimer={(e) => onToggleTimer(id, e)}
+          onDeleted={() => onDeleted(item.id)}
+          onToggleDone={() => onToggleDone(item.id)}
+          onToggleEditing={() => onToggleEditing(item.id)}
+          onToggleTimer={(e) => onToggleTimer(item.id, e)}
         />
       );
     });

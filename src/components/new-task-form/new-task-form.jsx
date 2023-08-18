@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './new-task-form.css';
 
-export default class NewTaskForm extends Component {
+export class NewTaskForm extends Component {
   state = {
     label: '',
     minutes: '',
