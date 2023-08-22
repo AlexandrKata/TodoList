@@ -1,38 +1,35 @@
-import React, { Component } from 'react';
-import Proptypes from 'prop-types';
+import React from 'react';
+import propTypes from 'prop-types';
 import './tasks-filter.css';
 
-export class TasksFilter extends Component {
-  static defaultProps = {
-    filter: '',
-    onFilterChange: () => {},
-  };
-  static propTypes = {
-    filter: Proptypes.string,
-    onFilterChange: Proptypes.func,
-  };
-
-  buttons = [
+export const TasksFilter = ({ filter, onChangeFilter }) => {
+  const buttonsArr = [
     { name: 'all', label: 'All' },
     { name: 'active', label: 'Active' },
     { name: 'completed', label: 'Completed' },
   ];
 
-  render() {
-    const { filter, onFilterChange } = this.props;
+  const buttons = buttonsArr.map(({ name, label }) => {
+    const isActive = filter === name;
+    const classNames = isActive ? 'selected' : '';
+    return (
+      <li key={name}>
+        <button type="button" className={classNames} data-name={name} onClick={(e) => onChangeFilter(e)}>
+          {label}
+        </button>
+      </li>
+    );
+  });
 
-    const buttons = this.buttons.map(({ name, label }) => {
-      const isActive = filter === name;
-      const classNames = isActive ? 'selected' : '';
-      return (
-        <li key={name}>
-          <button type="button" className={classNames} onClick={() => onFilterChange(name)}>
-            {label}
-          </button>
-        </li>
-      );
-    });
+  return <ul className="filters">{buttons}</ul>;
+};
 
-    return <ul className="filters">{buttons}</ul>;
-  }
-}
+TasksFilter.propTypes = {
+  filter: propTypes.string,
+  onFilterChange: propTypes.func,
+};
+
+TasksFilter.defaultProps = {
+  filter: 'all',
+  onFilterChange: () => {},
+};

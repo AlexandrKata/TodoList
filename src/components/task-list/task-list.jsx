@@ -1,42 +1,54 @@
-import React, { Component } from 'react';
-import Proptypes from 'prop-types';
+import React from 'react';
+import propTypes from 'prop-types';
 import './task-list.css';
 
 import { Task } from '../task';
 
-export class TaskList extends Component {
-  static defaultProps = {
-    todos: [],
-    onDeleted: () => {},
-    onToggleDone: () => {},
-    onToggleEditing: () => {},
-    onEdited: () => {},
-  };
+export const TaskList = ({
+  todos,
+  onEditItem,
+  onDeleteItem,
+  onToggleEditing,
+  onToggleDone,
+  onToggleTimer,
+  onTickTimerItem,
+}) => {
+  const elements = todos.map((item) => {
+    const { id, ...itemProps } = item;
+    return (
+      <Task
+        key={id}
+        id={id}
+        {...itemProps}
+        item={item}
+        onEditItem={onEditItem}
+        onDeleteItem={() => onDeleteItem(id)}
+        onToggleEditing={() => onToggleEditing(id)}
+        onToggleDone={() => onToggleDone(id)}
+        onToggleTimer={(e) => onToggleTimer(e, id)}
+        onTickTimerItem={() => onTickTimerItem(id)}
+      />
+    );
+  });
+  return <ul className="todo-list">{elements}</ul>;
+};
 
-  static propTypes = {
-    todos: Proptypes.array,
-    onDeleted: Proptypes.func,
-    onToggleDone: Proptypes.func,
-    onToggleEditing: Proptypes.func,
-    onEdited: Proptypes.func,
-  };
+TaskList.propTypes = {
+  todos: propTypes.array,
+  onEditItem: propTypes.func,
+  onDeleteItem: propTypes.func,
+  onToggleEditing: propTypes.func,
+  onToggleDone: propTypes.func,
+  onToggleTimer: propTypes.func,
+  onTickTimerItem: propTypes.func,
+};
 
-  render() {
-    const { todos, onDeleted, onToggleDone, onToggleEditing, onToggleTimer, onEdited } = this.props;
-    const elements = todos.map((item) => {
-      const { ...itemProps } = item;
-      return (
-        <Task
-          key={item.id}
-          {...itemProps}
-          onEdited={onEdited}
-          onDeleted={() => onDeleted(item.id)}
-          onToggleDone={() => onToggleDone(item.id)}
-          onToggleEditing={() => onToggleEditing(item.id)}
-          onToggleTimer={(e) => onToggleTimer(item.id, e)}
-        />
-      );
-    });
-    return <ul className="todo-list">{elements}</ul>;
-  }
-}
+TaskList.defaultProps = {
+  todos: [],
+  onEditItem: () => {},
+  onDeleteItem: () => {},
+  onToggleEditing: () => {},
+  onToggleDone: () => {},
+  onToggleTimer: () => {},
+  onTickTimerItem: () => {},
+};
